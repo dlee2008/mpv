@@ -17,10 +17,8 @@
  * License along with mpv.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#include <dirent.h>
 #include <sys/stat.h>
 #include <time.h>
-#include <unistd.h>
 
 #include <libplacebo/colorspace.h>
 #include <libplacebo/options.h>
@@ -1636,9 +1634,6 @@ done:
 
 static void cache_save_obj(void *p, pl_cache_obj obj)
 {
-    if (!obj.data || !obj.size)
-        return;
-
     const struct cache *c = p;
     void *ta_ctx = talloc_new(NULL);
 
@@ -1649,8 +1644,14 @@ static void cache_save_obj(void *p, pl_cache_obj obj)
     if (!filepath)
         goto done;
 
+    if (!obj.data || !obj.size) {
+        unlink(filepath);
+        goto done;
+    }
+
     // Don't save if already exists
-    if (!stat(filepath, &(struct stat){0})) {
+    struct stat st;
+    if (!stat(filepath, &st) && st.st_size == obj.size) {
         MP_DBG(c, "%s: key(%"PRIx64"), size(%zu)\n", __func__, obj.key, obj.size);
         goto done;
     }

@@ -270,6 +270,46 @@ Alt+2 (and Command+2 on macOS)
 Command + f (macOS only)
     Toggle fullscreen (see also ``--fs``).
 
+(The following keybindings open a selector in the console that lets you choose
+from a list of items by typing part of the desired item and/or by navigating
+them with keybindings: ``Down`` and ``Ctrl+n`` go down, ``Up`` and ``Ctrl+p`` go
+up, ``Page down`` and ``Ctrl+f`` scroll down one page, and ``Page up`` and
+``Ctrl+b`` scroll up one page.)
+
+g-p
+    Select a playlist entry.
+
+g-s
+    Select a subtitle track.
+
+g-S
+    Select a secondary subtitle track.
+
+g-a
+    Select an audio track.
+
+g-v
+    Select a video track.
+
+g-t
+    Select a track of any type.
+
+g-c
+    Select a chapter.
+
+g-l
+    Select a subtitle line to seek to. This currently requires ``ffmpeg`` in
+    ``PATH``, or in the same folder as mpv on Windows.
+
+g-d
+    Select an audio device.
+
+g-b
+    Select a defined input binding.
+
+g-r
+    Show the values of all properties.
+
 (The following keys are valid if you have a keyboard with multimedia keys.)
 
 PAUSE
@@ -557,7 +597,7 @@ Suffix        Meaning
 -pre          Prepend 1 or more items (same syntax as -set)
 -clr          Clear the option (remove all items)
 -remove       Delete item if present (does not interpret escapes)
--toggle       Append an item, or remove if if it already exists (no escapes)
+-toggle       Append an item, or remove it if it already exists (no escapes)
 ============= ===============================================
 
 ``-append`` is meant as a simple way to append a single item without having
@@ -591,23 +631,24 @@ appropriate structured data type.
 
 Prior to mpv 0.33, ``:`` was also recognized as separator by ``-set``.
 
-Filter options
-~~~~~~~~~~~~~~
+Object settings list options
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-This is a very complex option type for the ``--af`` and ``--vf`` options only.
-They often require complicated escaping. See `VIDEO FILTERS`_ for details. They
-support the following operations:
+This is a very complex option type for some options, such as ``--af`` and ``--vf``.
+They often require complicated escaping. See `VIDEO FILTERS`_ for details.
+
+They support the following operations:
 
 ============= ===============================================
 Suffix        Meaning
 ============= ===============================================
--set          Set a list of filters (using ``,`` as separator)
--append       Append single filter
--add          Append 1 or more filters (same syntax as -set)
--pre          Prepend 1 or more filters (same syntax as -set)
--clr          Clear the option (remove all filters)
--remove       Delete filter if present
--toggle       Append a filter, or remove if if it already exists
+-set          Set a list of items (using ``,`` as separator)
+-append       Append single item
+-add          Append 1 or more items (same syntax as -set)
+-pre          Prepend 1 or more items (same syntax as -set)
+-clr          Clear the option (remove all items)
+-remove       Delete item if present
+-toggle       Append an item, or remove it if it already exists
 -help         Pseudo operation that prints a help text to the terminal
 ============= ===============================================
 
@@ -629,6 +670,8 @@ aliases for the proper option with ``-append`` action. For example,
 Options of this type can be changed at runtime using the ``change-list``
 command, which takes the suffix (without the ``-``) as separate operation
 parameter.
+
+An object settings list can hold up to 100 elements.
 
 CONFIGURATION FILES
 ===================
@@ -1697,5 +1740,5 @@ FILES ON MACOS
 
 On macOS the watch later directory is located at ``~/.config/mpv/watch_later/``
 and the cache directory is set to ``~/Library/Caches/io.mpv/``. These directories
-can't be overwritten by enviroment variables.
+can't be overwritten by environment variables.
 Everything else is the same as `FILES`_.
